@@ -179,4 +179,79 @@ describe('Users endpoints', function() {
             })
         })
     })
+
+    describe('PATCH /api/users/:id', () => {
+        context('Given no users', () => {
+            it('responds with 404', () => {
+                const userId = 525600
+                return supertest(app)
+                    .patch(`/api/users/${userId}`)
+                    .expect(404, { error: { message: `User doesn't exist` } })
+            })
+        })
+        
+        context('Given there are users in the database', () => {
+            const testUsers = makeUsersArray()
+
+            beforeEach('insert users', () => {
+                return db
+                    .into('story_bits_users')
+                    .insert(testUsers)
+            })
+
+            it('responds with 204 and updates the user', () => {
+                const idToUpdate = 2
+                const updatedUser = {
+                    username: 'Dani Dummy'
+                }
+                const expectedUser = {
+                    ...testUsers[idToUpdate - 1],
+                    ...updatedUser
+                }
+                return supertest(app)
+                    .patch(`/api/users/${idToUpdate}`)
+                    .send(updatedUser)
+                    .expect(204)
+                    .then(res => 
+                        supertest(app)
+                            .get(`/api/users/${idToUpdate}`)
+                            .expect({...expectedUser, acct_created: expectedUser.acct_created.toISOString()})
+                    )
+            })
+            it('responds with 400 when no required fields are supplied', () => {
+                const idToUpdate = 2
+
+                return supertest(app)
+                    .patch(`/api/users/${idToUpdate}`)
+                    .send({ irrelevantField: 'foo' })
+                    .expect(400, {
+                        error: {
+                            message: `You must provide a new username to change your username`
+                        }
+                    })
+            })
+            it('responds with 204 when updating only a subset of fields', () => {
+                const idToUpdate = 2
+                const updatedUser = {
+                    username: 'Dani Dummy'
+                }
+                const expectedUser = {
+                    ...testUsers[idToUpdate - 1],
+                    ...updatedUser
+                }
+                return supertest(app)
+                    .patch(`/api/users/${idToUpdate}`)
+                    .send({
+                        ...updatedUser,
+                        fieldToIgnore: 'should not be in GET response'
+                    })
+                    .expect(204)
+                    .then(res => 
+                        supertest(app)
+                            .get(`/api/users/${idToUpdate}`)
+                            .expect({...expectedUser, acct_created: expectedUser.acct_created.toISOString()})
+                    )
+            })
+        })
+    })
 })

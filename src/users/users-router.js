@@ -78,5 +78,27 @@ usersRouter
             })
             .catch(next)
     })
+    .patch(jsonParser, (req, res, next) => {
+        const {username} = req.body
+        const userToUpdate = {username}
+
+        if(!username) {
+            return res.status(400).json({
+                error: {
+                    message: `You must provide a new username to change your username`
+                }
+            })
+        }
+
+        UsersService.updateUser(
+            req.app.get('db'),
+            req.params.id,
+            userToUpdate
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 module.exports = usersRouter
