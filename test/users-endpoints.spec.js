@@ -127,11 +127,11 @@ describe('Users endpoints', function() {
                     const actual = new Date(res.body.acct_created).toLocaleString()
                     expect(actual).to.eql(expected)
                 })
-                .then(res => {
+                .then(res => 
                     supertest(app)
                         .get(`/api/users/${res.body.id}`)
                         .expect(res.body)
-                })
+                )
         })
 
         it('responds with 400 and an error message when username is missing', () => {
@@ -141,6 +141,42 @@ describe('Users endpoints', function() {
                 .expect(400, {
                     error: {message: 'You must provide a username'}
                 })
+        })
+    })
+
+    describe('DELETE /api/users:id', () => {
+        context('Given no users', () => {
+            it('responds with 404', () => {
+                const userId = 525600
+                return supertest(app)
+                    .delete(`/api/users/${userId}`)
+                    .expect(404, { error: { message: `User doesn't exist` } })
+            })
+        })
+        context('Given there are users in the database', () => {
+            const testUsers = makeUsersArray()
+
+            beforeEach('insert users', () => {
+                return db
+                    .into('story_bits_users')
+                    .insert(testUsers)
+            })
+
+            it('responds with 204 and removes the user', () => {
+                const idToRemove = 2
+                const expectedUsers = testUsers.filter(user => user.id !== idToRemove)
+                return supertest(app)
+                    .delete(`/api/users/${idToRemove}`)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get('/api/users')
+                            .expect(expectedUsers.map(user => (
+                                 {...user, acct_created: user.acct_created.toISOString()} 
+                            )))
+                    
+                    )
+            })
         })
     })
 })

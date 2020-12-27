@@ -68,5 +68,15 @@ usersRouter
             acct_created: res.user.acct_created
         })
     })
+    .delete((req, res, next) => {
+        UsersService.deleteUser(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(() => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 module.exports = usersRouter
