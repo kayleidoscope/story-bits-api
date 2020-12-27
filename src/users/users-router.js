@@ -17,6 +17,32 @@ usersRouter
             })
             .catch(next)
     })
+    .post(jsonParser, (req, res, next) => {
+        const {username} = req.body
+        const newUser = {username}
+
+        if (!username) {
+            return res.status(400).json({
+                error: {message: 'You must provide a username'}
+            })
+        }
+
+        UsersService.insertUser(
+            req.app.get('db'),
+            newUser
+        )
+            .then(user => {
+                res
+                    .status(201)
+                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                    .json({
+                        id: user.id,
+                        username: xss(user.username),
+                        acct_created: user.acct_created
+                    })
+            })
+            .catch(next)
+    })
 
 usersRouter
     .route('/:id')

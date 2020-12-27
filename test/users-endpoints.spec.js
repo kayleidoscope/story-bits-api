@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const knex = require('knex');
 const supertest = require('supertest');
 const app = require('../src/app')
@@ -87,6 +88,59 @@ describe('Users endpoints', function() {
                         expect(res.body.username).to.eql('Naughty1&lt;script&gt;alert(\"xss\");&lt;/script&gt;')
                     })
             })
+        })
+    })
+
+    describe('POST /api/users', () => {
+        context('Given an XSS attack user', () => {
+            const evilUser = {
+                id: 911,
+                username: 'Naughty1<script>alert("xss");</script>'
+            }
+            it('removes XSS attack content', () => {
+                return supertest(app)
+                    .post(`/api/users`)
+                    .send(evilUser)
+                    .expect(201)
+                    .expect(res => {
+                        expect(res.body.username).to.eql('Naughty1&lt;script&gt;alert(\"xss\");&lt;/script&gt;')
+                    })
+            })
+        })
+
+        it('creates a new user, responding with 201 and the new user', function() {
+            this.retries(3)
+
+            const newUser = {
+                username: 'Prince Zuko'
+            }
+
+            return supertest(app)
+                .post('/api/users')
+                .send(newUser)
+                .expect(201)
+                .expect(res => {
+                    expect(res.body.username).to.eql(newUser.username)
+                    expect(res.body).to.have.property('id')
+                    expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
+                    const expected = new Date().toLocaleString()
+                    const actual = new Date(res.body.acct_created).toLocaleString()
+                    expect(actual).to.eql(expected)
+                })
+                .then(res => {
+                    supertest(app)
+                        .get(`/api/users/${res.body.id}`)
+                        .expect(res.body)
+                })
+        })
+
+        it('responds with 400 and an error message when username is missing', () => {
+            return supertest(app)
+                .post('/api/users')
+                .send({})
+                .expect(400, {
+                    error: {message: 'You must provide a username'}
+                })
         })
     })
 })
