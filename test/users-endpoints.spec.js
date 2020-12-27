@@ -17,9 +17,9 @@ describe('Users endpoints', function() {
         app.set('db', db)
     })
     
-    before('clean the table', () => db('story_bits_users').truncate())
-    
-    afterEach('cleanup', () => db('story_bits_users').truncate())
+    before(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
+
+    afterEach(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
     
     after('disconnect from db', () => db.destroy())
     

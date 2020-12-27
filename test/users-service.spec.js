@@ -15,9 +15,9 @@ describe(`Users service object`, function() {
         })
     })
 
-    before(() => db('story_bits_users').truncate())
+    before(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db('story_bits_users').truncate())
+    afterEach(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
 
     after(() => db.destroy())
 
