@@ -1,6 +1,7 @@
 const {expect} = require('chai')
 const knex = require('knex')
 const StoriesService = require('../src/stories/stories-service')
+const UsersService = require('../src/users/users-service')
 const {makeUsersArray} = require('./users-fixtures')
 const {makeStoriesArray} = require('./stories-fixtures')
 
@@ -108,9 +109,12 @@ describe(`Stories service object`, function() {
                 user_id: 1
             }
 
+            UsersService.insertUser(db, newUser)
+
             return StoriesService.insertStory(db, newStory)
                 .then(actual => {
                     expect(actual).to.eql({
+                        id: 1,
                         user_id: newStory.user_id,
                         title: newStory.title,
                         description: newStory.description

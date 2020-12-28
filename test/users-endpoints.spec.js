@@ -144,7 +144,7 @@ describe('Users endpoints', function() {
         })
     })
 
-    describe('DELETE /api/users:id', () => {
+    describe('DELETE /api/users/:id', () => {
         context('Given no users', () => {
             it('responds with 404', () => {
                 const userId = 525600
