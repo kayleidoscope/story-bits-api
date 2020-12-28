@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config')
 const { restart } = require('nodemon')
 const usersRouter = require('./users/users-router')
 const storiesRouter = require('./stories/stories-router')
+const charactersRouter = require('./characters/characters-router')
 
 const app = express()
 
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use('/api/users', usersRouter)
 app.use('/api/stories', storiesRouter)
+app.use('/api/characters', charactersRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

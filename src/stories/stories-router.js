@@ -11,6 +11,19 @@ storiesRouter
     .route('/')
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
+
+        // const {user_id} = req.params;
+
+        // // if (user_id) {
+        // //     StoriesService.getStoriesByUser(knexInstance, user_id)
+        // //     .then(stories => {
+        // //         res.json(stories)
+        // //     })
+        // //     .catch(next)
+        // // } else {
+            
+        // // }
+
         StoriesService.getAllStories(knexInstance)
             .then(stories => {
                 res.json(stories)

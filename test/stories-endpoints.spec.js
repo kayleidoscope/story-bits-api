@@ -44,6 +44,10 @@ describe('Stories endpoints', function() {
                     .get('/api/stories')
                     .expect(200, testStories)
             })
+
+            it(`GET /api/stories?user_id=[USER_ID] responds with 200 and a user's stories`, () => {
+
+            })
         })
 
         context('Given there are no stories in the database', () => {
@@ -281,7 +285,7 @@ describe('Stories endpoints', function() {
                     )
             })
 
-            it.only('responds with 204 when updating only a subset of fields', () => {
+            it('responds with 204 when updating only a subset of fields', () => {
                 const idToUpdate = 2
                 const updatedStory = {
                     description: "She met them under the big tree every Saturday until the two fell in love."
