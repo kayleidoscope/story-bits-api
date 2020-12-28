@@ -235,4 +235,75 @@ describe('Stories endpoints', function() {
             })
         })
     })
+
+    describe('PATCH /api/stories/:id', () => {
+        context('Given no users', () => {
+            it('responds with 404', () => {
+                const storyId = 1221
+                return supertest(app)
+                    .patch(`/api/stories/${storyId}`)
+                    .expect(404, {error: {message: `Story doesn't exist`}})
+            })
+        })
+
+        context('Given there are stories in the database', () => {
+            beforeEach(() => {
+                return db
+                    .into('story_bits_users')
+                    .insert(testUsers)
+                    .then(() => {
+                        return db
+                            .into('story_bits_stories')
+                            .insert(testStories)
+                    })
+            })
+
+            it('responds with 204 and updates the user', () => {
+                const idToUpdate = 2
+                const updatedStory = {
+                    title: "The Lonely Hollow",
+                    description: "She met them under the big tree every Saturday until the two fell in love."
+                }
+
+                const expectedStory = {
+                    ...testStories[idToUpdate - 1],
+                    ...updatedStory
+                }
+
+                return supertest(app)
+                    .patch(`/api/stories/${idToUpdate}`)
+                    .send(updatedStory)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/stories/${idToUpdate}`)
+                            .expect(expectedStory)
+                    )
+            })
+
+            it.only('responds with 204 when updating only a subset of fields', () => {
+                const idToUpdate = 2
+                const updatedStory = {
+                    description: "She met them under the big tree every Saturday until the two fell in love."
+                }
+                const expectedStory = {
+                    ...testStories[idToUpdate - 1],
+                    ...updatedStory
+                }
+
+                return supertest(app)
+                    .patch(`/api/stories/${idToUpdate}`)
+                    .send({
+                        ...updatedStory,
+                        fieldToIgnore: 'should not be in response'
+                    })
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/stories/${idToUpdate}`)
+                            .expect(expectedStory)
+                    )
+            })
+        })
+    })
 })

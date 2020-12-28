@@ -81,5 +81,27 @@ storiesRouter
             })
             .catch(next)
     })
+    .patch(jsonParser, (req, res, next) => {
+        const {title, description} = req.body
+        const storyToUpdate = {title, description}
+
+        const numOfValues = Object.values(storyToUpdate).filter(Boolean).length
+        if(numOfValues === 0)
+            return res.status(400).json({
+                error: {
+                    message: `Request body must contain either title or description`
+                }
+            })
+
+        StoriesService.updateStory(
+            req.app.get('db'),
+            req.params.id,
+            storyToUpdate
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 module.exports = storiesRouter
