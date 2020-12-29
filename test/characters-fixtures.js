@@ -19,7 +19,7 @@ function makeCharactersArray() {
             description: `Fierce, bold, and guarded. Doesn't trust easily`,
             gender: 'female',
             appearance: 'Black, with dark skin, an afro and a round face',
-            fashion: 'Varies wildly between swearshirts and crop tops',
+            fashion: 'Varies wildly between sweatshirts and crop tops',
             room_decor: 'Stylishly decorated and peaceful. Her safe haven.'
         },
         {

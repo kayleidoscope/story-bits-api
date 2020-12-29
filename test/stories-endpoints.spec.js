@@ -187,7 +187,7 @@ describe('Stories endpoints', function() {
                 })
         })
 
-        it('responds with 400 and an error message when user_id is missing', () => {
+        it('responds with 400 and an error message when description is missing', () => {
             const newStory = {
                 user_id: 2,
                 title: 'Reckless'
@@ -241,7 +241,7 @@ describe('Stories endpoints', function() {
     })
 
     describe('PATCH /api/stories/:id', () => {
-        context('Given no users', () => {
+        context('Given no stories', () => {
             it('responds with 404', () => {
                 const storyId = 1221
                 return supertest(app)
