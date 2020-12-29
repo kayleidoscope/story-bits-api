@@ -8,7 +8,7 @@ const {makeUsersArray} = require('./users-fixtures')
 const {makeCharactersArray} = require('./characters-fixtures');
 const e = require('express');
 
-describe.only('Characters endpoints', function() {
+describe('Characters endpoints', function() {
     let db;
 
     const testUsers = makeUsersArray()
