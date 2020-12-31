@@ -1,4 +1,4 @@
-ALTER TABLE story_bits_stories
+ALTER TABLE stories
     DROP COLUMN user_id;
 
-DROP TABLE IF EXISTS story_bits_stories;
+DROP TABLE IF EXISTS stories;

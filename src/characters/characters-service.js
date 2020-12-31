@@ -1,11 +1,11 @@
 const CharactersService = {
     getAllCharacters(knex) {
-        return knex.select('*').from('story_bits_characters')
+        return knex.select('*').from('characters')
     },
     insertCharacter(knex, newCharacter) {
         return knex
             .insert(newCharacter)
-            .into('story_bits_characters')
+            .into('characters')
             .returning('*')
             .then(rows => {
                 return rows[0]
@@ -14,17 +14,17 @@ const CharactersService = {
     getById(knex, id) {
         return knex
             .select('*')
-            .from('story_bits_characters')
+            .from('characters')
             .where({id})
             .first()
     },
     deleteCharacter(knex, id) {
-        return knex('story_bits_characters')
+        return knex('characters')
             .where({id})
             .delete()
     },
     updateCharacter(knex, id, newCharFields) {
-        return knex('story_bits_characters')
+        return knex('characters')
             .where({id})
             .update(newCharFields)
     }

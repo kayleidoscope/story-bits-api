@@ -1,11 +1,11 @@
 const StoriesService = {
     getAllStories(knex) {
-        return knex.select('*').from('story_bits_stories')
+        return knex.select('*').from('stories')
     },
     insertStory(knex, newStory) {
         return knex
             .insert(newStory)
-            .into('story_bits_stories')
+            .into('stories')
             .returning('*')
             .then(rows => {
                 return rows[0]
@@ -14,23 +14,23 @@ const StoriesService = {
     getById(knex, id) {
         return knex
             .select('*')
-            .from('story_bits_stories')
+            .from('stories')
             .where('id', id)
             .first()
     },
     getStoriesByUser(knex, user_id) {
         return knex
             .select('*')
-            .from('story_bits_stories')
+            .from('stories')
             .where({user_id})
     },
     deleteStory(knex, id) {
-        return knex('story_bits_stories')
+        return knex('stories')
             .where({id})
             .delete()
     },
     updateStory(knex, id, newStoryFields) {
-        return knex('story_bits_stories')
+        return knex('stories')
             .where({id})
             .update(newStoryFields)
     }

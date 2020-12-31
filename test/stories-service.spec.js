@@ -18,24 +18,24 @@ describe(`Stories service object`, function() {
         })
     })
 
-    before(() => db.raw('TRUNCATE story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE stories, users RESTART IDENTITY CASCADE'))
 
     after(() => db.destroy())
 
-    context('Given story_bits_stories has data', () => {
+    context('Given stories has data', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
         })
-        it('getAllStories() resolves list from story_bits_stories table', () => {
+        it('getAllStories() resolves list from stories table', () => {
             return StoriesService.getAllStories(db)
                 .then(actual => {
                     expect(actual).to.eql(testStories)
@@ -50,7 +50,7 @@ describe(`Stories service object`, function() {
                     expect(actual).to.eql(storiesByUser)
                 })
         })
-        it('getById() resolves a story by id from story_bits_stories', () => {
+        it('getById() resolves a story by id from stories', () => {
             const thirdId = 3;
             const thirdTestStory = testStories[thirdId - 1]
             return StoriesService.getById(db, thirdId)
@@ -63,7 +63,7 @@ describe(`Stories service object`, function() {
                     })
                 })
         })
-        it('deleteStory() removes a story by id from story_bits_stories', () => {
+        it('deleteStory() removes a story by id from stories', () => {
             const storyId = 3;
             return StoriesService.deleteStory(db, storyId)
                 .then(() => StoriesService.getAllStories(db))
@@ -72,7 +72,7 @@ describe(`Stories service object`, function() {
                     expect(allStories).to.eql(expected)
                 })
         })
-        it('updateStory() changes a story by id from story_bits_stories', () => {
+        it('updateStory() changes a story by id from stories', () => {
             const idOfStoryToUpdate = 3;
             const oldStoryData = testStories[idOfStoryToUpdate - 1]
             const newStoryData = {
@@ -91,7 +91,13 @@ describe(`Stories service object`, function() {
         })
     })
 
-    context('Given story_bits_stories has no data', () => {
+    context('Given stories has no data but does have users', () => {
+        beforeEach(() => {
+            return db
+                .into('users')
+                .insert(testUsers)
+        })
+
         it('getAllStories() resolves an empty array', () => {
             return StoriesService.getAllStories(db)
                 .then(actual => {
@@ -108,8 +114,6 @@ describe(`Stories service object`, function() {
                 description: 'Not really sure what this is gonna be about yet',
                 user_id: 1
             }
-
-            UsersService.insertUser(db, newUser)
 
             return StoriesService.insertStory(db, newStory)
                 .then(actual => {

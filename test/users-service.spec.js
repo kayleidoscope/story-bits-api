@@ -15,25 +15,25 @@ describe(`Users service object`, function() {
         })
     })
 
-    before(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE users RESTART IDENTITY CASCADE'))
 
     after(() => db.destroy())
 
-    context(`Given 'story_bits_users' has data`, () => {
+    context(`Given 'users' has data`, () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
         })
-        it(`getAllUsers() resolves from 'story_bits_users table`, () => {
+        it(`getAllUsers() resolves from 'users table`, () => {
             return UsersService.getAllUsers(db)
                 .then(actual => {
                     expect(actual).to.eql(testUsers)
                 })
         })
-        it(`getById() resolves a user by id from 'story_bits_users`, () => {
+        it(`getById() resolves a user by id from 'users`, () => {
             const thirdId = 3;
             const thirdTestUser = testUsers[thirdId - 1];
             return UsersService.getById(db, thirdId)
@@ -45,7 +45,7 @@ describe(`Users service object`, function() {
                     })
                 })
         })
-        it(`deleteUser() removes a user by id from 'story_bits_users`, () => {
+        it(`deleteUser() removes a user by id from 'users`, () => {
             const userId = 3;
             return UsersService.deleteUser(db, userId)
                 .then(() => UsersService.getAllUsers(db))
@@ -54,7 +54,7 @@ describe(`Users service object`, function() {
                     expect(allUsers).to.eql(expected)
                 })
         })
-        it(`updateUser() updates a user from the 'story_bits_users' table`, () => {
+        it(`updateUser() updates a user from the 'users' table`, () => {
             const idOfUserToUpdate = 3;
             const newUserData = {
                 username: 'Polly Pretend-Smith',
@@ -71,7 +71,7 @@ describe(`Users service object`, function() {
         })
     })
 
-    context(`Given 'story_bits_users' has no data`, () => {
+    context(`Given 'users' has no data`, () => {
         it(`getAllUsers() resolves an empty array`, () => {
             return UsersService.getAllUsers(db)
                 .then(actual => {

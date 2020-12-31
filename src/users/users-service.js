@@ -1,11 +1,11 @@
 const UsersService = {
     getAllUsers(knex) {
-        return knex.select('*').from('story_bits_users')
+        return knex.select('*').from('users')
     },
     insertUser(knex, newUser) {
         return knex
             .insert(newUser)
-            .into('story_bits_users')
+            .into('users')
             .returning('*')
             .then(rows => {
                 return rows[0]
@@ -13,18 +13,18 @@ const UsersService = {
     },
     getById(knex, id) {
         return knex
-            .from('story_bits_users')
+            .from('users')
             .select('*')
             .where('id', id)
             .first()
     },
     deleteUser(knex, id) {
-        return knex('story_bits_users')
+        return knex('users')
             .where({id})
             .delete()
     },
     updateUser(knex, id, newUserFields) {
-        return knex('story_bits_users')
+        return knex('users')
             .where({id})
             .update(newUserFields)
     }

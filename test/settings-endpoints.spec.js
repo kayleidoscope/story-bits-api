@@ -23,9 +23,9 @@ describe('Settings  endpoints', function() {
         app.set('db', db)
     })
 
-    before(() => db.raw('TRUNCATE story_bits_settings, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE settings, stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_settings, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE settings, stories, users RESTART IDENTITY CASCADE'))
 
     after('disconnect from db', () => db.destroy())
 
@@ -34,16 +34,16 @@ describe('Settings  endpoints', function() {
         context('Given there are stories in the database', () => {
             beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_settings')
+                        .into('settings')
                         .insert(testSettings)
                 })
             })
@@ -67,16 +67,16 @@ describe('Settings  endpoints', function() {
     describe('GET /api/settings/:id', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_settings')
+                        .into('settings')
                         .insert(testSettings)
                 })
         })
@@ -97,13 +97,13 @@ describe('Settings  endpoints', function() {
                 id: 911,
                 story_id: 1,
                 name: '<script>alert("xss");</script>',
-                isresidence: false,
+                is_residence: false,
                 decor: 'Pristine <script>alert("xss");</script>'
             }
 
             beforeEach('insert evil Setting', () => {
                 return db
-                    .into('story_bits_settings')
+                    .into('settings')
                     .insert([evilSetting])
             })
 
@@ -122,11 +122,11 @@ describe('Settings  endpoints', function() {
     describe('POST /api/settings', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
         })
@@ -136,7 +136,7 @@ describe('Settings  endpoints', function() {
                 id: 911,
                 story_id: 1,
                 name: '<script>alert("xss");</script>',
-                isresidence: false,
+                is_residence: false,
                 decor: 'Pristine <script>alert("xss");</script>'
             }
 
@@ -156,7 +156,7 @@ describe('Settings  endpoints', function() {
             const newSetting = {
                 story_id: 3,
                 name: 'Placeholder Name',
-                isresidence: true,
+                is_residence: true,
                 decor: 'Placeholder decor'
             }
 
@@ -167,7 +167,7 @@ describe('Settings  endpoints', function() {
                 .expect(res => {
                     expect(res.body.story_id).to.eql(newSetting.story_id)
                     expect(res.body.name).to.eql(newSetting.name)
-                    expect(res.body.isresidence).to.eql(newSetting.isresidence)
+                    expect(res.body.is_residence).to.eql(newSetting.is_residence)
                     expect(res.body.decor).to.eql(newSetting.decor)
                     expect(res.body).to.have.property('id')
                 })
@@ -181,7 +181,7 @@ describe('Settings  endpoints', function() {
         it('responds with 400 and an error message when story_id is missing', () => {
             const newSetting = {
                 name: 'Apartments33',
-                isresidence: true,
+                is_residence: true,
                 decor: 'Bright and shiny'
             }
 
@@ -196,7 +196,7 @@ describe('Settings  endpoints', function() {
         it('responds with 400 and an error message when name is missing', () => {
             const newSetting = {
                 story_id: 3,
-                isresidence: true,
+                is_residence: true,
                 decor: 'Untidy'
             }
 
@@ -239,16 +239,16 @@ describe('Settings  endpoints', function() {
         context('Given there are stories', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
                     .then(() => {
                         return db
-                            .into('story_bits_settings')
+                            .into('settings')
                             .insert(testSettings)
                     })
             })
@@ -282,16 +282,16 @@ describe('Settings  endpoints', function() {
         context('Given there are settings in the database', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
                     .then(() => {
                         return db
-                            .into('story_bits_settings')
+                            .into('settings')
                             .insert(testSettings)
                     })
             })
@@ -301,7 +301,7 @@ describe('Settings  endpoints', function() {
                 const updatedSetting = {
                     story_id: 3,
                     name: 'Zoey`s bedroom',
-                    isresidence: true,
+                    is_residence: true,
                     decor: 'Stylishly decorated and peaceful'
                 }
 

@@ -21,37 +21,37 @@ describe(`Characters service object`, function() {
         })
     })
 
-    before(() => db.raw('TRUNCATE story_bits_characters, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE characters, stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_characters, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE characters, stories, users RESTART IDENTITY CASCADE'))
 
     after(() => db.destroy())
 
-    context('Given story_bits_characters has data', () => {
+    context('Given characters has data', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_characters')
+                        .into('characters')
                         .insert(testCharacters)
                 })
         })
 
-        it('getAllCharacters() resolves list from story_bits_characters', () => {
+        it('getAllCharacters() resolves list from characters', () => {
             return CharactersService.getAllCharacters(db)
                 .then(actual => {
                     expect(actual).to.eql(testCharacters)
                 })
         })
 
-        it('getById() resolves a story by id from story_bits_characters', () => {
+        it('getById() resolves a character by id from characters', () => {
             const thirdId = 3
             const thirdTestChar = testCharacters[thirdId - 1]
             return CharactersService.getById(db, thirdId)
@@ -70,7 +70,7 @@ describe(`Characters service object`, function() {
                 })
         })
         
-        it('deleteChar() removes a char by id from story_bits_characters', () => {
+        it('deleteChar() removes a char by id from characters', () => {
             const charId = 3;
             return CharactersService.deleteCharacter(db, charId)
                 .then(() => CharactersService.getAllCharacters(db))
@@ -80,7 +80,7 @@ describe(`Characters service object`, function() {
                 })
         })
 
-        it('updateCharacter() changes a char by id from story_bits_characters', () => {
+        it('updateCharacter() changes a char by id from characters', () => {
             const idOfCharToUpdate = 2
             const oldCharData = testCharacters[idOfCharToUpdate - 1]
             const newCharData = {
@@ -104,7 +104,7 @@ describe(`Characters service object`, function() {
         })
     })
 
-    context('Given story_bits_characters has no data', () => {
+    context('Given characters has no data', () => {
         it('getAllCharacters() resolves an empty array', () => {
             return CharactersService.getAllCharacters(db)
                 .then(chars => {

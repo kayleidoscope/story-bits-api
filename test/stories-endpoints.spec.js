@@ -20,9 +20,9 @@ describe('Stories endpoints', function() {
         app.set('db', db)
     })
 
-    before(() => db.raw('TRUNCATE story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE stories, users RESTART IDENTITY CASCADE'))
 
     after('disconnect from db', () => db.destroy())
 
@@ -30,11 +30,11 @@ describe('Stories endpoints', function() {
         context('Given there are stories in the database', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
             })
@@ -63,11 +63,11 @@ describe('Stories endpoints', function() {
 
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
         })
@@ -94,7 +94,7 @@ describe('Stories endpoints', function() {
 
             beforeEach('insert evil story', () => {
                 return db
-                    .into('story_bits_stories')
+                    .into('stories')
                     .insert([evilStory])
             })
             it('removes XSS attack content', () => {
@@ -112,7 +112,7 @@ describe('Stories endpoints', function() {
     describe('POST /api/stories', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
         })
 
@@ -215,11 +215,11 @@ describe('Stories endpoints', function() {
         context('Given there are stories in the database', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
             })
@@ -253,11 +253,11 @@ describe('Stories endpoints', function() {
         context('Given there are stories in the database', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
             })

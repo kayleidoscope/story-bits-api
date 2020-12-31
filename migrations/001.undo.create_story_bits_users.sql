@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS story_bits_users;
+DROP TABLE IF EXISTS users;

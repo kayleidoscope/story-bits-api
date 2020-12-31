@@ -17,9 +17,9 @@ describe('Users endpoints', function() {
         app.set('db', db)
     })
     
-    before(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE users RESTART IDENTITY CASCADE'))
     
     after('disconnect from db', () => db.destroy())
     
@@ -28,7 +28,7 @@ describe('Users endpoints', function() {
 
             beforeEach('insert users', () => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
             })
 
@@ -56,7 +56,7 @@ describe('Users endpoints', function() {
 
             beforeEach('insert users', () => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
             })
             
@@ -77,7 +77,7 @@ describe('Users endpoints', function() {
 
             beforeEach('insert evil user', () => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert([evilUser])
             })
             it('removes XSS attack content', () => {
@@ -158,7 +158,7 @@ describe('Users endpoints', function() {
 
             beforeEach('insert users', () => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
             })
 
@@ -195,7 +195,7 @@ describe('Users endpoints', function() {
 
             beforeEach('insert users', () => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
             })
 

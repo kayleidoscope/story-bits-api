@@ -19,7 +19,7 @@ settingsRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const {story_id, name, isresidence, decor} = req.body
+        const {story_id, name, is_residence, decor} = req.body
         const newSetting = {story_id, name}
         const requiredFields = Object.entries(newSetting)
 
@@ -31,7 +31,7 @@ settingsRouter
             }
         }
 
-        newSetting.isresidence = isresidence
+        newSetting.is_residence = is_residence
         newSetting.decor = decor
 
         SettingsService.insertSetting(
@@ -46,7 +46,7 @@ settingsRouter
                         id: setting.id,
                         story_id: setting.story_id,
                         name: xss(setting.name),
-                        isresidence: setting.isresidence,
+                        is_residence: setting.is_residence,
                         decor: xss(setting.decor)
                     })
             })
@@ -75,7 +75,7 @@ settingsRouter
             id: res.setting.id,
             story_id: res.setting.story_id,
             name: xss(res.setting.name),
-            isresidence: res.setting.isresidence,
+            is_residence: res.setting.is_residence,
             decor: xss(res.setting.decor)
         })
     })
@@ -90,8 +90,8 @@ settingsRouter
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const {story_id, name, isresidence, decor} = req.body
-        const settingToUpdate = {story_id, name, isresidence, decor}
+        const {story_id, name, is_residence, decor} = req.body
+        const settingToUpdate = {story_id, name, is_residence, decor}
 
         const numOfValues = Object.values(settingToUpdate).filter(Boolean).length
         if(numOfValues === 0)

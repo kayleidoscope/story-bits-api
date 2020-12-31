@@ -21,37 +21,37 @@ describe(`Settings service object`, function() {
         })
     })
 
-    before(() => db.raw('TRUNCATE story_bits_settings, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE settings, stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_settings, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE settings, stories, users RESTART IDENTITY CASCADE'))
 
     after(() => db.destroy())
 
-    context('Given story_bits_settings has data', () => {
+    context('Given settings has data', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_settings')
+                        .into('settings')
                         .insert(testSettings)
                 })
         })
 
-        it('getAllSettings() resolves list from story_bits_settings', () => {
+        it('getAllSettings() resolves list from settings', () => {
             return SettingsService.getAllSettings(db)
                 .then(actual => {
                     expect(actual).to.eql(testSettings)
                 })
         })
 
-        it('getById() resolves a story by id from story_bits_settings', () => {
+        it('getById() resolves a story by id from settings', () => {
             const thirdId = 3
             const thirdTestSetting = testSettings[thirdId - 1]
             return SettingsService.getById(db, thirdId)
@@ -60,13 +60,13 @@ describe(`Settings service object`, function() {
                         id: thirdId,
                         story_id: thirdTestSetting.story_id,
                         name: thirdTestSetting.name,
-                        isresidence: thirdTestSetting.isresidence,
+                        is_residence: thirdTestSetting.is_residence,
                         decor: thirdTestSetting.decor
                     })
                 })
         })
         
-        it('deleteSetting() removes a setting by id from story_bits_settings', () => {
+        it('deleteSetting() removes a setting by id from settings', () => {
             const settingId = 3;
             return SettingsService.deleteSetting(db, settingId)
                 .then(() => SettingsService.getAllSettings(db))
@@ -76,13 +76,13 @@ describe(`Settings service object`, function() {
                 })
         })
 
-        it('updateSetting() changes a setting by id from story_bits_settings', () => {
+        it('updateSetting() changes a setting by id from settings', () => {
             const idOfSettingToUpdate = 2
             const oldSettingData = testSettings[idOfSettingToUpdate - 1]
             const newSettingData = {
                 name: 'Cafe Boolean',
                 story_id: 1,
-                isresidence: false,
+                is_residence: false,
                 decor: 'A normal coffeeshop.'
             }
             return SettingsService.updateSetting(db, idOfSettingToUpdate, newSettingData)
@@ -96,7 +96,7 @@ describe(`Settings service object`, function() {
         })
     })
 
-    context('Given story_bits_settings has no data', () => {
+    context('Given settings has no data', () => {
         it('getAllSettings() resolves an empty array', () => {
             return SettingsService.getAllSettings(db)
                 .then(setting => {
@@ -108,7 +108,7 @@ describe(`Settings service object`, function() {
             const newSetting = {
                 story_id: 1,
                 name: 'Leopold Plaza',
-                isresidence: false,
+                is_residence: false,
                 decor: 'Stonework laid in beautiful pattern surrounding a fountain'
             }
 
@@ -133,7 +133,7 @@ describe(`Settings service object`, function() {
                         name: newSetting.name,
                         story_id: newSetting.story_id,
                         decor: newSetting.decor,
-                        isresidence: newSetting.isresidence
+                        is_residence: newSetting.is_residence
                     })
                 })
         })

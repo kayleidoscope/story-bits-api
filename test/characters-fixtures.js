@@ -44,6 +44,17 @@ function makeCharactersArray() {
             fashion: 'Tends to wear dresses, skirts, blouses. Is the kind of person to dress up for no reason.',
             room_decor: ''
         },
+        {
+            id: 5,
+            story_id: 3,
+            name: 'Randpo',
+            age: '',
+            description: ``,
+            gender: '',
+            appearance: '',
+            fashion: '',
+            room_decor: ''
+        }
     ]
 }
 

@@ -23,9 +23,9 @@ describe('Characters endpoints', function() {
         app.set('db', db)
     })
 
-    before(() => db.raw('TRUNCATE story_bits_characters, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    before(() => db.raw('TRUNCATE characters, stories, users RESTART IDENTITY CASCADE'))
 
-    afterEach(() => db.raw('TRUNCATE story_bits_characters, story_bits_stories, story_bits_users RESTART IDENTITY CASCADE'))
+    afterEach(() => db.raw('TRUNCATE characters, stories, users RESTART IDENTITY CASCADE'))
 
     after('disconnect from db', () => db.destroy())
 
@@ -34,16 +34,16 @@ describe('Characters endpoints', function() {
         context('Given there are stories in the database', () => {
             beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_characters')
+                        .into('characters')
                         .insert(testCharacters)
                 })
             })
@@ -67,16 +67,16 @@ describe('Characters endpoints', function() {
     describe('GET /api/characters/:id', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
                 .then(() => {
                     return db
-                        .into('story_bits_characters')
+                        .into('characters')
                         .insert(testCharacters)
                 })
         })
@@ -107,7 +107,7 @@ describe('Characters endpoints', function() {
 
             beforeEach('insert evil character', () => {
                 return db
-                    .into('story_bits_characters')
+                    .into('characters')
                     .insert([evilCharacter])
             })
 
@@ -131,11 +131,11 @@ describe('Characters endpoints', function() {
     describe('POST /api/characters', () => {
         beforeEach(() => {
             return db
-                .into('story_bits_users')
+                .into('users')
                 .insert(testUsers)
                 .then(() => {
                     return db
-                        .into('story_bits_stories')
+                        .into('stories')
                         .insert(testStories)
                 })
         })
@@ -273,16 +273,16 @@ describe('Characters endpoints', function() {
         context('Given there are stories', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
                     .then(() => {
                         return db
-                            .into('story_bits_characters')
+                            .into('characters')
                             .insert(testCharacters)
                     })
             })
@@ -316,16 +316,16 @@ describe('Characters endpoints', function() {
         context('Given there are characters in the database', () => {
             beforeEach(() => {
                 return db
-                    .into('story_bits_users')
+                    .into('users')
                     .insert(testUsers)
                     .then(() => {
                         return db
-                            .into('story_bits_stories')
+                            .into('stories')
                             .insert(testStories)
                     })
                     .then(() => {
                         return db
-                            .into('story_bits_characters')
+                            .into('characters')
                             .insert(testCharacters)
                     })
             })
