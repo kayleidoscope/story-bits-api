@@ -2,6 +2,14 @@ const ResidencesService = {
     getAllResidences(knex) {
         return knex.select('*').from('residences')
     },
+    getByIds(knex, character_id, setting_id) {
+        return knex
+            .from('residences')
+            .select('*')
+            .where({character_id})
+            .where({setting_id})
+            .first()
+    },
     createNewRelationship(knex, newRelationship) {
         return knex
             .insert(newRelationship)

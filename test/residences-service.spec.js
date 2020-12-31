@@ -7,7 +7,7 @@ const {makeCharactersArray} = require('./characters-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures')
 const {makeResidencesArray} = require('./residences-fixtures')
 
-describe.only('Residences service object', function() {
+describe('Residences service object', function() {
     let db;
 
     const testUsers = makeUsersArray()
@@ -60,6 +60,17 @@ describe.only('Residences service object', function() {
             return ResidencesService.getAllResidences(db)
                 .then(actual => {
                     expect(actual).to.eql(testResidences)
+                })
+        })
+
+        it('getByIds() resolves a single character-setting relationship', () => {
+            const settingId = 2
+            const characterId = 2
+
+            return ResidencesService.getByIds(db, characterId, settingId)
+                .then(actual => {
+                    expect(actual.setting_id).to.eql(settingId)
+                    expect(actual.character_id).to.eql(characterId)
                 })
         })
 

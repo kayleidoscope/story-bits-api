@@ -21,10 +21,10 @@ storiesRouter
             .catch(next)
         } else {
             StoriesService.getAllStories(knexInstance)
-            .then(stories => {
-                res.json(stories)
-            })
-            .catch(next)
+                .then(stories => {
+                    res.json(stories)
+                })
+                .catch(next)
         }
 
 

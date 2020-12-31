@@ -9,6 +9,7 @@ const usersRouter = require('./users/users-router')
 const storiesRouter = require('./stories/stories-router')
 const charactersRouter = require('./characters/characters-router')
 const settingsRouter = require('./settings/settings-router')
+const residencesRouter = require('./residences/residences-router')
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/stories', storiesRouter)
 app.use('/api/characters', charactersRouter)
 app.use('/api/settings', settingsRouter)
+app.use('/api/residences', residencesRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

@@ -46,7 +46,12 @@ describe('Stories endpoints', function() {
             })
 
             it(`GET /api/stories?user_id=[USER_ID] responds with 200 and a user's stories`, () => {
-
+                const userId = 2
+                const expectedStories = testStories.filter(story => story.user_id === userId)
+                
+                return supertest(app)
+                    .get(`/api/stories?user_id=${userId}`)
+                    .expect(200, expectedStories)
             })
         })
 
