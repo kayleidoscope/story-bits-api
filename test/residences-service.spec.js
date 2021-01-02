@@ -7,7 +7,7 @@ const {makeCharactersArray} = require('./characters-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures')
 const {makeResidencesArray} = require('./residences-fixtures')
 
-describe('Residences service object', function() {
+describe.only('Residences service object', function() {
     let db;
 
     const testUsers = makeUsersArray()
@@ -64,13 +64,14 @@ describe('Residences service object', function() {
         })
 
         it('getByIds() resolves a single character-setting relationship', () => {
-            const settingId = 2
-            const characterId = 2
+            const id = 2
 
-            return ResidencesService.getByIds(db, characterId, settingId)
+            const expected = testResidences.filter(residence => residence.id == id)
+            
+            return ResidencesService.getByIds(db, id)
                 .then(actual => {
-                    expect(actual.setting_id).to.eql(settingId)
-                    expect(actual.character_id).to.eql(characterId)
+                    expect(actual.setting_id).to.eql(expected[0].setting_id)
+                    expect(actual.character_id).to.eql(expected[0].character_id)
                 })
         })
 
@@ -96,26 +97,27 @@ describe('Residences service object', function() {
         })
 
         it('deleteResFromSet() removes a character from resident list by id', () => {
-            const charId = 3
-            const setId = 2
-            
-            return ResidencesService.deleteResFromSet(db, charId, setId)
-                .then(() => ResidencesService.getSetsOf(db, charId))
+            const id = 3
+            const expected = testResidences.filter(residence => residence.id === id)
+
+            return ResidencesService.deleteResFromSet(db, id)
+                .then(() => ResidencesService.getSetsOf(db, expected[0].character_id))
                 .then(homes => {
-                    expect(homes.setting_id).to.not.eql(setId)
+                    expect(homes.setting_id).to.not.eql(expected[0].setting_id)
                 })
         })
 
         it('updateResidence() changes the setting_id value of a residence entry', () => {
-            const charId = 3
-            const setId = 2
+            const id = 3
+
+            const expected = testResidences.filter(residence => residence.id === id)
 
             const newSettingField = {
                 setting_id: 3
             }
 
-            return ResidencesService.updateResidence(db, charId, setId, newSettingField)
-                .then(() => ResidencesService.getSetsOf(db, charId))
+            return ResidencesService.updateResidence(db, id, newSettingField)
+                .then(() => ResidencesService.getSetsOf(db, expected[0].character_id))
                 .then(homes => {
                     const result = homes.filter(home => home.setting_id === newSettingField.setting_id)
                     expect(result[0].setting_id).to.eql(newSettingField.setting_id)
@@ -123,15 +125,16 @@ describe('Residences service object', function() {
         })
 
         it('updateResidence() also changes the character_id value of a residence entry', () => {
-            const charId = 3
-            const setId = 2
+            const id = 3
+
+            const expected = testResidences.filter(residence => residence.id === id)
 
             const newCharacterField = {
                 character_id: 5
             }
 
-            return ResidencesService.updateResidence(db, charId, setId, newCharacterField)
-                .then(() => ResidencesService.getSetsOf(db, newCharacterField.character_id))
+            return ResidencesService.updateResidence(db, id, newCharacterField)
+                .then(() => ResidencesService.getSetsOf(db, expected[0].character_id))
                 .then(homes => {
                     const result = homes.filter(home => home.character_id === newCharacterField.character_id)
                     expect(result[0].character_id).to.eql(newCharacterField.character_id)

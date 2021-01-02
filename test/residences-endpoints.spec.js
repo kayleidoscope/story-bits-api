@@ -116,6 +116,45 @@ describe('ResidencesEndpoints', function() {
         })
     })
 
+    describe('GET /api/residences/:id', () => {
+        beforeEach(() => {
+            return db
+                .into('users')
+                .insert(testUsers)
+                .then(() => {
+                    return db
+                        .into('stories')
+                        .insert(testStories)
+                })
+                .then(() => {
+                    return db
+                        .into('characters')
+                        .insert(testCharacters)
+                })
+                .then(() => {
+                    return db
+                        .into('settings')
+                        .insert(testSettings)
+                })
+                .then(() => {
+                    return db
+                        .into('residences')
+                        .insert(testResidences)
+                })
+        })
+
+        context('Given there are residences in the db', () => {
+            it('GET /api/residences/:id responds with 200 and that residence', () => {
+                const id = 2
+                const expectedRes = testResidences[id - 1]
+
+                return supertest(app)
+                    .get(`/api/residences/${id}`)
+                    .expect(200, expectedRes)
+            })
+        })
+    })
+
     describe('POST /api/residences', () => {
         beforeEach(() => {
             return db
@@ -182,6 +221,56 @@ describe('ResidencesEndpoints', function() {
     })
 
     describe('DELETE /api/residences/:id removes a character-setting relationship', () => {
+        context('Given no residence relationships in the db', () => {
+            it('responds with 404 and the correct error message', () => {
+                const resId = 13242
 
+                return supertest(app)
+                    .delete(`/api/residences/${resId}`)
+                    .expect(404, {error: {message: `Character-setting relationship doesn't exist`}})
+            })
+        })
+
+        context('Given there are residences', () => {
+            beforeEach(() => {
+                return db
+                    .into('users')
+                    .insert(testUsers)
+                    .then(() => {
+                        return db
+                            .into('stories')
+                            .insert(testStories)
+                    })
+                    .then(() => {
+                        return db
+                            .into('characters')
+                            .insert(testCharacters)
+                    })
+                    .then(() => {
+                        return db
+                            .into('settings')
+                            .insert(testSettings)
+                    })
+                    .then(() => {
+                        return db
+                            .into('residences')
+                            .insert(testResidences)
+                    })
+            })
+
+            it('responds with 204 and removes the residence', () => {
+                const idToRemove = 2
+                const expectedRes = testResidences.filter(res => res.id !== idToRemove)
+
+                return supertest(app)
+                    .delete(`/api/residences/${idToRemove}`)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get('/api/residences')
+                            .expect(expectedRes)
+                    )
+            })
+        })
     })
 })

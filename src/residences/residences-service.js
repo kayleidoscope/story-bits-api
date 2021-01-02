@@ -2,12 +2,11 @@ const ResidencesService = {
     getAllResidences(knex) {
         return knex.select('*').from('residences')
     },
-    getByIds(knex, character_id, setting_id) {
+    getByIds(knex, id) {
         return knex
             .from('residences')
             .select('*')
-            .where({character_id})
-            .where({setting_id})
+            .where('id', id)
             .first()
     },
     createNewRelationship(knex, newRelationship) {
@@ -31,16 +30,14 @@ const ResidencesService = {
             .from('residences')
             .where({character_id})
     },
-    deleteResFromSet(knex, character_id, setting_id) {
+    deleteResFromSet(knex, id) {
         return knex('residences')
-            .where({character_id})
-            .where({setting_id})
+            .where({id})
             .delete()
     },
-    updateResidence(knex, character_id, setting_id, new_field) {
+    updateResidence(knex, id, new_field) {
         return knex('residences')
-            .where({character_id})
-            .where({setting_id})
+            .where({id})
             .update(new_field)
     }
 }

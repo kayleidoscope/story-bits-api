@@ -52,7 +52,7 @@ residencesRouter
         )
             .then(residence => {
                 res.status(201)
-                    // .location(path.posix.join(req.originalUrl, `/?`))
+                    .location(path.posix.join(req.originalUrl, `/${newRelationship.id}`))
                     .json({
                         character_id: residence.character_id,
                         setting_id: residence.setting_id
@@ -64,10 +64,10 @@ residencesRouter
 residencesRouter
     .route('/:id')
     .all((req, res, next) => {
-        const {character_id, setting_id} = req.query
+        const {id} = req.params
         const knexInstance = req.app.get('db')
 
-        ResidencesService.getByIds(knexInstance, character_id, setting_id)
+        ResidencesService.getByIds(knexInstance, id)
             .then(residence => {
                 if(!residence) {
                     return res.status(404).json({
@@ -75,7 +75,24 @@ residencesRouter
                     })
                 }
                 res.residence = residence
+                next()
             })
-            next()
+    })
+    .get((req, res, next) => {
+        res.json({
+            id: res.residence.id,
+            character_id: res.residence.character_id,
+            setting_id: res.residence.setting_id
+        })
+    })
+    .delete((req, res, next) => {
+        ResidencesService.deleteResFromSet(
+            req.app.get('db'),
+            req.params.id
+        )
+            .then(() => {
+                res.status(204).end()
+            })
+            .catch(next)
     })
 module.exports = residencesRouter
