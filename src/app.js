@@ -17,7 +17,7 @@ const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
   : 'common';
 
-// app.use(morgan(morganOption))
+app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
@@ -34,8 +34,7 @@ app.get('/', (req, res) => {
 app.use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {
-        // response = { error: { message: 'server error' } }
-        response = { message: error.message, error }
+        response = { error: { message: 'server error' } }
     } else {
         response = { message: error.message, error }
     }
