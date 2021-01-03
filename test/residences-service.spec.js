@@ -7,7 +7,7 @@ const {makeCharactersArray} = require('./characters-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures')
 const {makeResidencesArray} = require('./residences-fixtures')
 
-describe.only('Residences service object', function() {
+describe('Residences service object', function() {
     let db;
 
     const testUsers = makeUsersArray()
@@ -128,13 +128,13 @@ describe.only('Residences service object', function() {
             const id = 3
 
             const expected = testResidences.filter(residence => residence.id === id)
-
+            
             const newCharacterField = {
                 character_id: 5
             }
 
             return ResidencesService.updateResidence(db, id, newCharacterField)
-                .then(() => ResidencesService.getSetsOf(db, expected[0].character_id))
+                .then(() => ResidencesService.getResidentsOf(db, expected[0].setting_id))
                 .then(homes => {
                     const result = homes.filter(home => home.character_id === newCharacterField.character_id)
                     expect(result[0].character_id).to.eql(newCharacterField.character_id)
@@ -181,7 +181,8 @@ describe.only('Residences service object', function() {
                 .then(actual => {
                     expect(actual).to.eql({
                         character_id: newRelationship.character_id,
-                        setting_id: newRelationship.setting_id
+                        setting_id: newRelationship.setting_id,
+                        id: 1
                     })
                 })
         })

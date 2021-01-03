@@ -10,7 +10,6 @@ const jsonParser = express.json()
 usersRouter
     .route('/')
     .get((req, res, next) => {
-        console.log('potatoooooo')
         const knexInstance = req.app.get('db')
         UsersService.getAllUsers(knexInstance)
             .then(users => {

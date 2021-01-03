@@ -9,7 +9,7 @@ const {makeCharactersArray} = require('./characters-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures')
 const {makeResidencesArray} = require('./residences-fixtures')
 
-describe('ResidencesEndpoints', function() {
+describe.only('ResidencesEndpoints', function() {
     let db;
 
     const testUsers = makeUsersArray()
@@ -269,6 +269,92 @@ describe('ResidencesEndpoints', function() {
                         supertest(app)
                             .get('/api/residences')
                             .expect(expectedRes)
+                    )
+            })
+        })
+    })
+
+    describe('PATCH /api/residences/:id', () => {
+        context('Given no residences', () => {
+            it('responds with 404', () => {
+                const id = 134231
+
+                return supertest(app)
+                    .patch(`/api/residences/${id}`)
+                    .expect(404, {error: {message: `Character-setting relationship doesn't exist`}})
+            })
+        })
+
+        context('Given there are residences in the db', () => {
+            beforeEach(() => {
+                return db
+                    .into('users')
+                    .insert(testUsers)
+                    .then(() => {
+                        return db
+                            .into('stories')
+                            .insert(testStories)
+                    })
+                    .then(() => {
+                        return db
+                            .into('characters')
+                            .insert(testCharacters)
+                    })
+                    .then(() => {
+                        return db
+                            .into('settings')
+                            .insert(testSettings)
+                    })
+                    .then(() => {
+                        return db
+                            .into('residences')
+                            .insert(testResidences)
+                    })
+            })
+
+            it('responds 204 and updates the residence', () => {
+                const idToUpdate = 2
+                const updatedId = {
+                    character_id: 1,
+                    setting_id: 1
+                }
+
+                const expectedResidence = {
+                    id: idToUpdate,
+                    character_id: updatedId.character_id,
+                    setting_id: updatedId.setting_id
+                }
+
+                return supertest(app)
+                    .patch(`/api/residences/${idToUpdate}`)
+                    .send(updatedId)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/residences/${idToUpdate}`)
+                            .expect(expectedResidence)
+                    )
+            })
+
+            it('responds 204 when updating only a subset of fields', () => {
+                const idToUpdate = 2
+                const updatedId = {
+                    setting_id: 1
+                }
+
+                const expectedResidence = {
+                    ...testResidences[idToUpdate - 1],
+                    ...updatedId
+                }
+
+                return supertest(app)
+                    .patch(`/api/residences/${idToUpdate}`)
+                    .send(updatedId)
+                    .expect(204)
+                    .then(res =>
+                        supertest(app)
+                            .get(`/api/residences/${idToUpdate}`)
+                            .expect(expectedResidence)
                     )
             })
         })

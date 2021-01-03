@@ -95,4 +95,28 @@ residencesRouter
             })
             .catch(next)
     })
+    .patch(jsonParser, (req, res, next) => {
+        const {character_id, setting_id} = req.body
+        const update = {character_id, setting_id}
+
+        const numOfValues = Object.values(update).filter(Boolean).length
+        if(numOfValues === 0)
+            return res.status(400).json({
+                error: {
+                    message: `Request body must contain character_id and/or setting_d`
+                }
+            })
+
+        ResidencesService.updateResidence(
+            req.app.get('db'),
+            req.params.id,
+            update
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
+
+
 module.exports = residencesRouter
