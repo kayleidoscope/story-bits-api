@@ -53,6 +53,16 @@ describe('Settings  endpoints', function() {
                     .get('/api/settings')
                     .expect(200, testSettings)
             })
+
+            it.only('GET /api/settings/?story_id=[] responds with 200 and settubgs from that story', () => {
+                const storyId = 1
+
+                const expectedSettings = testSettings.filter(setting => setting.story_id === storyId)
+                
+                return supertest(app)
+                    .get(`/api/settings/?story_id=${storyId}`)
+                    .expect(200, expectedSettings)
+            })
         })
 
         context('Given there are no settings in the database', () => {

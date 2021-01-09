@@ -18,6 +18,12 @@ const SettingsService = {
             .where({id})
             .first()
     },
+    getByStoryId(knex, story_id) {
+        return knex
+            .select('*')
+            .from('settings')
+            .where({story_id})
+    },
     deleteSetting(knex, id) {
         return knex('settings')
             .where({id})

@@ -11,12 +11,21 @@ settingsRouter
     .route('/')
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
+        const {story_id} = req.query
 
-        SettingsService.getAllSettings(knexInstance)
+        if(story_id) {
+            SettingsService.getByStoryId(knexInstance, story_id)
+                .then(settings => {
+                    res.json(settings)
+                })
+                .catch(next)
+        } else if(!story_id) {
+                    SettingsService.getAllSettings(knexInstance)
             .then(settings => {
                 res.json(settings)
             })
             .catch(next)
+        }
     })
     .post(jsonParser, (req, res, next) => {
         const {story_id, name, is_residence, decor} = req.body

@@ -65,6 +65,17 @@ describe(`Settings service object`, function() {
                     })
                 })
         })
+
+        it('getByStoryId() resolves list of settings from a particular story', () => {
+            const firstId = 1
+
+            const expectedSettings = testSettings.filter(setting => setting.story_id === firstId)
+
+            return SettingsService.getByStoryId(db, firstId)
+                .then(actual => {
+                    expect(actual).to.eql(expectedSettings)
+                })
+        })
         
         it('deleteSetting() removes a setting by id from settings', () => {
             const settingId = 3;
