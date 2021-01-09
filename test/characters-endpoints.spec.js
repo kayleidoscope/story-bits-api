@@ -53,6 +53,16 @@ describe('Characters endpoints', function() {
                     .get('/api/characters')
                     .expect(200, testCharacters)
             })
+
+            it('GET /api/characters/?story_id=[] responds with 200 and characters from that story', () => {
+                const storyId = 1
+
+                const expectedCharacters = testCharacters.filter(char => char.story_id === storyId)
+                
+                return supertest(app)
+                    .get(`/api/characters/?story_id=${storyId}`)
+                    .expect(200, expectedCharacters)
+            })
         })
 
         context('Given there are no characters in the database', () => {

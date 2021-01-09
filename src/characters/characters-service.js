@@ -18,6 +18,12 @@ const CharactersService = {
             .where({id})
             .first()
     },
+    getByStoryId(knex, story_id) {
+        return knex
+            .select('*')
+            .from('characters')
+            .where({story_id})
+    },
     deleteCharacter(knex, id) {
         return knex('characters')
             .where({id})

@@ -9,7 +9,7 @@ const {makeCharactersArray} = require('./characters-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures')
 const {makeResidencesArray} = require('./residences-fixtures')
 
-describe.only('ResidencesEndpoints', function() {
+describe('ResidencesEndpoints', function() {
     let db;
 
     const testUsers = makeUsersArray()

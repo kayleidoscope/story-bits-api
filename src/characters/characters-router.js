@@ -11,12 +11,21 @@ charactersRouter
     .route('/')
     .get((req, res, next) => {
         const knexInstance = req.app.get('db')
+        const {story_id} = req.query
 
-        CharactersService.getAllCharacters(knexInstance)
-            .then(chars => {
-                res.json(chars)
-            })
-            .catch(next)
+        if(story_id) {
+            CharactersService.getByStoryId(knexInstance, story_id)
+                .then(chars => {
+                    res.json(chars)
+                }).catch(next)
+        } else if (!story_id) {
+            CharactersService.getAllCharacters(knexInstance)
+                .then(chars => {
+                    res.json(chars)
+                })
+                .catch(next)
+        }
+
     })
     .post(jsonParser, (req, res, next) => {
         const {story_id, name, description, gender, appearance, fashion, age, room_decor} = req.body

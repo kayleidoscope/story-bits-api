@@ -66,12 +66,12 @@ describe('Residences service object', function() {
         it('getByIds() resolves a single character-setting relationship', () => {
             const id = 2
 
-            const expected = testResidences.filter(residence => residence.id == id)
+            const [expected] = testResidences.filter(residence => residence.id == id)
             
             return ResidencesService.getByIds(db, id)
                 .then(actual => {
-                    expect(actual.setting_id).to.eql(expected[0].setting_id)
-                    expect(actual.character_id).to.eql(expected[0].character_id)
+                    expect(actual.setting_id).to.eql(expected.setting_id)
+                    expect(actual.character_id).to.eql(expected.character_id)
                 })
         })
 

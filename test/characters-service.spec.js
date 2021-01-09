@@ -69,6 +69,17 @@ describe(`Characters service object`, function() {
                     })
                 })
         })
+
+        it('getByStoryId() resolves a list of characters by their story ID', () => {
+            const firstId = 1
+
+            const expectedCharacters = testCharacters.filter(char => char.story_id === firstId)
+
+            return CharactersService.getByStoryId(db, firstId)
+                .then(actual => {
+                    expect(actual).to.eql(expectedCharacters)
+                })
+        })
         
         it('deleteChar() removes a char by id from characters', () => {
             const charId = 3;
