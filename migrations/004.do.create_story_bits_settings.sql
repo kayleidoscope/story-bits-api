@@ -3,7 +3,7 @@ CREATE TABLE settings (
     story_id INTEGER REFERENCES stories(id) NOT NULL,
     name TEXT NOT NULL,
     is_residence BOOLEAN DEFAULT 'false',
-    description TEXT NOT NULL,
+    description TEXT,
     decor TEXT
 );
 
