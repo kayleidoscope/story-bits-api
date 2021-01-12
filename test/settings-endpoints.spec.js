@@ -8,7 +8,7 @@ const {makeUsersArray} = require('./users-fixtures')
 const {makeSettingsArray} = require('./settings-fixtures');
 const e = require('express');
 
-describe('Settings  endpoints', function() {
+describe.only('Settings  endpoints', function() {
     let db;
 
     const testUsers = makeUsersArray()
@@ -54,7 +54,7 @@ describe('Settings  endpoints', function() {
                     .expect(200, testSettings)
             })
 
-            it.only('GET /api/settings/?story_id=[] responds with 200 and settubgs from that story', () => {
+            it('GET /api/settings/?story_id=[] responds with 200 and settubgs from that story', () => {
                 const storyId = 1
 
                 const expectedSettings = testSettings.filter(setting => setting.story_id === storyId)

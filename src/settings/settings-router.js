@@ -28,7 +28,7 @@ settingsRouter
         }
     })
     .post(jsonParser, (req, res, next) => {
-        const {story_id, name, is_residence, decor} = req.body
+        const {story_id, name, is_residence, decor, description} = req.body
         const newSetting = {story_id, name}
         const requiredFields = Object.entries(newSetting)
 
@@ -42,6 +42,7 @@ settingsRouter
 
         newSetting.is_residence = is_residence
         newSetting.decor = decor
+        newSetting.description = description
 
         SettingsService.insertSetting(
             req.app.get('db'),
@@ -56,7 +57,8 @@ settingsRouter
                         story_id: setting.story_id,
                         name: xss(setting.name),
                         is_residence: setting.is_residence,
-                        decor: xss(setting.decor)
+                        decor: xss(setting.decor),
+                        description: xss(setting.description)
                     })
             })
             .catch(next)
@@ -85,7 +87,8 @@ settingsRouter
             story_id: res.setting.story_id,
             name: xss(res.setting.name),
             is_residence: res.setting.is_residence,
-            decor: xss(res.setting.decor)
+            decor: xss(res.setting.decor),
+            description: xss(res.setting.description)
         })
     })
     .delete((req, res, next) => {

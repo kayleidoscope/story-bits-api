@@ -61,7 +61,8 @@ describe(`Settings service object`, function() {
                         story_id: thirdTestSetting.story_id,
                         name: thirdTestSetting.name,
                         is_residence: thirdTestSetting.is_residence,
-                        decor: thirdTestSetting.decor
+                        decor: thirdTestSetting.decor,
+                        description: thirdTestSetting.description
                     })
                 })
         })
@@ -101,6 +102,7 @@ describe(`Settings service object`, function() {
                 .then(setting => {
                     expect(setting).to.eql({
                         id: idOfSettingToUpdate,
+                        description: oldSettingData.description,
                         ...newSettingData
                     })
                 })
@@ -120,7 +122,8 @@ describe(`Settings service object`, function() {
                 story_id: 1,
                 name: 'Leopold Plaza',
                 is_residence: false,
-                decor: 'Stonework laid in beautiful pattern surrounding a fountain'
+                decor: 'Stonework laid in beautiful pattern surrounding a fountain',
+                description: 'A place where people gather'
             }
 
             const newUser = {
@@ -144,7 +147,8 @@ describe(`Settings service object`, function() {
                         name: newSetting.name,
                         story_id: newSetting.story_id,
                         decor: newSetting.decor,
-                        is_residence: newSetting.is_residence
+                        is_residence: newSetting.is_residence,
+                        description: newSetting.description
                     })
                 })
         })
