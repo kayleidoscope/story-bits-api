@@ -1,7 +1,6 @@
-INSERT INTO characters (id, story_id, name, age, description, gender, appearance, fashion, room_decor)
+INSERT INTO characters (story_id, name, age, description, gender, appearance, fashion, room_decor)
 VALUES
         (
-            1,
             1,
             'Lissa',
             '15',
@@ -12,7 +11,7 @@ VALUES
             'Messy with shelves and shelves of books and knick-knacks'
         ),
         (
-            2, 2,
+            2,
             'Zoe',
             '32',
             'Fierce, bold, and guarded. Doesn''t trust easily',
@@ -22,7 +21,7 @@ VALUES
             'Stylishly decorated and peaceful. Her safe haven.'
         ),
         (
-            3, 2,
+            2,
             'Gem',
             '35',
             'Seemingly open and carefree, but keeps their feelings close to their chest',
@@ -32,7 +31,7 @@ VALUES
             'Collects a lot of rocks. Has shelves and shalves of journals. Their safe haven'
         ),
         (
-            4, 3,
+            3,
             'Cynthia',
             '24',
             'Loves adventure but doesn''t lead the kind of life that means she finds it',
@@ -42,7 +41,7 @@ VALUES
             ''
         ),
         (
-            5, 3,
+            3,
             'Randpo',
             '',
             '',
@@ -52,7 +51,7 @@ VALUES
             ''
         ),
         (
-            6, 5,
+            5,
             'Lilia Green',
             '70 - Born 13th of November',
             'Likeable, pompous, willing, gracious. ',
@@ -64,7 +63,7 @@ VALUES
             'Her house is messy but homey'
         ),
         (
-            7, 6,
+            6,
             'Aiesha White',
             '4 - Born 7th of July',
             'Average mannered, Sentimental and Brings out the best in others',
@@ -74,7 +73,7 @@ VALUES
             'Toys toys toys'
         ),
         (
-            8, 7,
+            7,
             'Adriana Johnson',
             '16 - Born 4th of June',
             'Average mannered, Sentimental and Brings out the best in others',
@@ -86,7 +85,7 @@ VALUES
             'Beautiful'
         ),
         (
-            9, 8,
+            8,
             'Cavin Cardenas',
             '42',
             'Open, self-disciplined, average mannered, intellectual. ',
@@ -98,7 +97,7 @@ VALUES
             'Boring'
         ),
         (
-            10, 9,
+            9,
             'Hunter Michael',
             '37',
             'Open, self-disciplined, average mannered, intellectual. ',
@@ -110,7 +109,7 @@ VALUES
             'Comfortable'
         ),
         (
-            11, 10,
+            10,
             'Ron Nolan',
             '22',
             'Open, self-disciplined, average mannered, intellectual.',
@@ -122,7 +121,7 @@ VALUES
             'Prim'
         ),
         (
-            12, 11,
+            11,
             'Kenard Potts',
             '85',
             'Generous, emotional, a joker, highly rebellious, egocentric.',
@@ -134,7 +133,7 @@ VALUES
             'Cozy'
         ),
         (
-            13, 12,
+            12,
             'Jeanette Mcintyre',
             '23',
             'Likeable, intellectual, thoughtful, determined, a joker.',
@@ -145,7 +144,7 @@ VALUES
             'White but not sterile'
         ),
         (
-            14, 13,
+            13,
             'Maryann Salas',
             '18',
             'Likeable, truthful, mischevious, attention-seeking, rarely angry.',
@@ -157,7 +156,7 @@ VALUES
             'White but not sterile'
         ),
         (
-            15, 4,
+            4,
             'Damon Preston',
             '62',
             'Reassuring, well-mannered, truthful, cheerful, sentimental, assertive.',
@@ -169,7 +168,7 @@ VALUES
             'Colorful'
         ),
         (
-            16, 7,
+            7,
             'Maureen Lowery',
             '1',
             'Calm',

@@ -3,3 +3,19 @@ CREATE TABLE users (
     username TEXT NOT NULL,
     acct_created TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+INSERT INTO users (username)
+VALUES
+    ('fireworksjudge'),
+    ('oliver'),
+    ('kentledge'),
+    ('kokoproject'),
+    ('petrifiedsteam'),
+    ('peterswanson'),
+    ('mushroomhouse'),
+    ('owlette'),
+    ('marshall'),
+    ('baby'),
+    ('grogu'),
+    ('spike'),
+    ('lark');
