@@ -102,15 +102,15 @@ settingsRouter
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const {story_id, name, is_residence, decor} = req.body
-        const settingToUpdate = {story_id, name, is_residence, decor}
+        const {story_id, name, is_residence, decor, description} = req.body
+        const settingToUpdate = {story_id, name, is_residence, decor, description}
 
         const numOfValues = Object.values(settingToUpdate).filter(Boolean).length
         if(numOfValues === 0)
             return res.status(400).json({
                 error: {
                     message: `Request body must contain one of the following fields:
-                    story_id, name, description, gender, appearance, fashion, age, room_decor`
+                    story_id, name, description, gender, appearance, fashion, age, room_decor, description`
                 }
             })
 
