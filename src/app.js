@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
+const logger = require('./logger')
 const { NODE_ENV } = require('./config')
 const { restart } = require('nodemon')
 const usersRouter = require('./users/users-router')
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 
 app.use(function errorHandler(error, req, res, next) {
     let response
+    logger.error(error)
     if (NODE_ENV === 'production') {
         response = { error: { message: 'server error' } }
     } else {
