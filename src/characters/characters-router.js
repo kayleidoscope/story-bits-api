@@ -28,7 +28,7 @@ charactersRouter
 
     })
     .post(jsonParser, (req, res, next) => {
-        const {story_id, name, description, gender, appearance, fashion, age, room_decor} = req.body
+        const {story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms} = req.body
         const newCharacter = {story_id, name}
         const requiredFields = Object.entries(newCharacter)
 
@@ -46,6 +46,11 @@ charactersRouter
         newCharacter.fashion = fashion
         newCharacter.age = age
         newCharacter.room_decor = room_decor
+        newCharacter.motivation = motivation
+        newCharacter.pronouns = pronouns
+        newCharacter.history = history
+        newCharacter.pets = pets
+        newCharacter.mannerisms = mannerisms
 
         CharactersService.insertCharacter(
             req.app.get('db'),
@@ -64,7 +69,12 @@ charactersRouter
                         appearance: xss(char.appearance),
                         fashion: xss(char.fashion),
                         age: xss(char.age),
-                        room_decor: xss(char.room_decor)
+                        room_decor: xss(char.room_decor),
+                        motivation: xss(char.motivation),
+                        pronouns: xss(char.pronouns),
+                        history: xss(char.history),
+                        pets: xss(char.pets),
+                        mannerisms: xss(char.mannerisms)
                     })
             })
             .catch(next)
@@ -97,7 +107,12 @@ charactersRouter
             appearance: xss(res.char.appearance),
             fashion: xss(res.char.fashion),
             age: xss(res.char.age),
-            room_decor: xss(res.char.room_decor)
+            room_decor: xss(res.char.room_decor),
+            motivation: xss(res.char.motivation),
+            pronouns: xss(res.char.pronouns),
+            history: xss(res.char.history),
+            pets: xss(res.char.pets),
+            mannerisms: xss(res.char.mannerisms)
         })
     })
     .delete((req, res, next) => {
@@ -111,8 +126,8 @@ charactersRouter
             .catch(next)
     })
     .patch(jsonParser, (req, res, next) => {
-        const {story_id, name, description, gender, appearance, fashion, age, room_decor} = req.body
-        const characterToUpdate = {story_id, name, description, gender, appearance, fashion, age, room_decor}
+        const {story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms} = req.body
+        const characterToUpdate = {story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms}
 
         const numOfValues = Object.values(characterToUpdate).filter(Boolean).length
         if(numOfValues === 0)

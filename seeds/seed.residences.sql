@@ -1,6 +1,5 @@
 INSERT INTO residences (character_id, setting_id)
 VALUES
-    (1, 13),
     (2, 1),
     (3, 1),
     (4, 2),

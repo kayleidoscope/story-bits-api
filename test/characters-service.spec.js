@@ -65,7 +65,12 @@ describe(`Characters service object`, function() {
                         gender: thirdTestChar.gender,
                         appearance: thirdTestChar.appearance,
                         fashion: thirdTestChar.fashion,
-                        room_decor: thirdTestChar.room_decor
+                        room_decor: thirdTestChar.room_decor,
+                        history: thirdTestChar.history,
+                        mannerisms: thirdTestChar.mannerisms,
+                        motivation:thirdTestChar.motivation,
+                        pronouns: thirdTestChar.pronouns,
+                        pets: thirdTestChar.pets
                     })
                 })
         })
@@ -102,7 +107,12 @@ describe(`Characters service object`, function() {
                 gender: '',
                 appearance: 'Black with dark skin, an afro, and a round face',
                 fashion: 'Varies widly. E.g., wears tattered hoodies and crop tops',
-                room_decor: 'Stylishly decorated and peaceful'
+                room_decor: 'Stylishly decorated and peaceful',
+                history: 'Rough childhood.',
+                mannerisms: 'Shakes her head to get her hair out of her face',
+                motivation: '',
+                pronouns: '',
+                pets: 'A cat, Peggy'
             }
             return CharactersService.updateCharacter(db, idOfCharToUpdate, newCharData)
                 .then(() => CharactersService.getById(db, idOfCharToUpdate))
@@ -132,7 +142,12 @@ describe(`Characters service object`, function() {
                 gender: 'male',
                 appearance: 'Wrinkled skin, a sharp stare',
                 fashion: 'Wears a lot of baggy sweaters',
-                room_decor: 'Smells like old books'
+                room_decor: 'Smells like old books',
+                history: 'A quiet life',
+                mannerisms: '',
+                motivation: 'To maintain peace and quiet',
+                pronouns: 'he/him',
+                pets: 'None'
             }
 
             const newUser = {
@@ -160,7 +175,12 @@ describe(`Characters service object`, function() {
                         gender: newCharacter.gender,
                         appearance: newCharacter.appearance,
                         fashion: newCharacter.fashion,
-                        room_decor: newCharacter.room_decor
+                        room_decor: newCharacter.room_decor,
+                        history: newCharacter.history,
+                        mannerisms: newCharacter.mannerisms,
+                        motivation:newCharacter.motivation,
+                        pronouns: newCharacter.pronouns,
+                        pets: newCharacter.pets
                     })
                 })
         })

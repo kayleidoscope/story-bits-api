@@ -9,7 +9,12 @@ function makeCharactersArray() {
             gender: 'female',
             appearance: 'White. Slight with dirty brown hair, sharp features, and large glasses',
             fashion: 'Wears a lot of baggy sweaters',
-            room_decor: 'Messy with shelves and shelves of books and knick-knacks'
+            room_decor: 'Messy with shelves and shelves of books and knick-knacks',
+            history: "",
+            mannerisms: "",
+            motivation: "",
+            pets: "",
+            pronouns: ""
         },
         {
             id: 2,
@@ -20,7 +25,12 @@ function makeCharactersArray() {
             gender: 'female',
             appearance: 'Black, with dark skin, an afro and a round face',
             fashion: 'Varies wildly between sweatshirts and crop tops',
-            room_decor: 'Stylishly decorated and peaceful. Her safe haven.'
+            room_decor: 'Stylishly decorated and peaceful. Her safe haven.',
+            history: "",
+            mannerisms: "",
+            motivation: "",
+            pets: "",
+            pronouns: ""
         },
         {
             id: 3,
@@ -31,7 +41,12 @@ function makeCharactersArray() {
             gender: 'genderqueer',
             appearance: 'Tan skin, short dark hair, and a round face too',
             fashion: 'Prefers jeans, t-shirts, comfortable casual clothes',
-            room_decor: 'Collects a lot of rocks. Has shelves and shalves of journals. Their safe haven'
+            room_decor: 'Collects a lot of rocks. Has shelves and shalves of journals. Their safe haven',
+            history: "",
+            mannerisms: "",
+            motivation: "",
+            pets: "",
+            pronouns: ""
         },
         {
             id: 4,
@@ -42,7 +57,12 @@ function makeCharactersArray() {
             gender: 'female',
             appearance: 'Pale skin, long straight brown hair parted down the middle. Big eyes',
             fashion: 'Tends to wear dresses, skirts, blouses. Is the kind of person to dress up for no reason.',
-            room_decor: ''
+            room_decor: '',
+            history: "",
+            mannerisms: "",
+            motivation: "",
+            pets: "",
+            pronouns: ""
         },
         {
             id: 5,
@@ -53,7 +73,12 @@ function makeCharactersArray() {
             gender: '',
             appearance: '',
             fashion: '',
-            room_decor: ''
+            room_decor: '',
+            history: "",
+            mannerisms: "",
+            motivation: "",
+            pets: "",
+            pronouns: ""
         }
     ]
 }

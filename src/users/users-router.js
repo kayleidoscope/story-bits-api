@@ -21,6 +21,7 @@ usersRouter
         const {username} = req.body
         const newUser = {username}
 
+        console.log('we got here')
         if (!username) {
             return res.status(400).json({
                 error: {message: 'You must provide a username'}
