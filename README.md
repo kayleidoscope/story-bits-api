@@ -42,7 +42,44 @@ Route | Request | Body | Query params | Result
 /characters | POST | *story_id, *name, *description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | creates a new character
 /characters/:id | GET | | | returns the character with that ID
 /characters/:id | DELETE | | | deletes the character with that ID
-/characters/:id | PATCH | *one of the following: story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | updates a character
+/characters/:id | PATCH | *at least one of the following: story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | updates a character
+
+Query param | Type
+----------- | ----
+story_id | number
+name | string
+description | string
+gender | string
+appearance | string
+fashion | string
+age | string
+room_decor | string
+motivation | string
+pronouns | string
+history | string
+pets | string
+mannerisms | string
+
+## /settings
+
+An asterisk (*) indicates a required parameter.
+
+Route | Request | Body | Query params | Result
+----- | ------- | ---- | ------------ | ------
+/settings | GET | | | returns all settings
+/settings | GET | | story_id | returns settings for that story
+/settings | POST | *story_id, *name, *description, decor, is_residence | | creates a new setting
+/settings/:id | GET | | | returns the setting with that ID
+/settings/:id | DELETE | | | deletes the setting with that ID
+/settings/:id | PATCH | *at least one of the following: story_id, name, description, decor, is_residence | updates a setting
+
+Query param | type
+----------- | ----
+story_id | number
+name | string
+description | string
+decor | string
+is_residence | boolean
 
 ## Tech Stack
 
