@@ -18,6 +18,16 @@ Route | Request | Body | Result
 /users/:id | DELETE | | deletes the user with that ID
 /users/:id | PATCH | | updates a user's username
 
+### /stories
+
+An asterisk (*) indicates a required parameter.
+
+Route | Request | Body | Params | Result
+----- | ------- | ---- | ------ | ------
+/stories | GET | | | returns all stories
+/stories | GET | | user_id | returns all stories by that user
+/stories | POST | *title, *description, *user_id | creates a new story
+
 ## Tech Stack
 
 * Javascript
