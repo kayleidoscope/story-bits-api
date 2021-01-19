@@ -22,11 +22,14 @@ Route | Request | Body | Result
 
 An asterisk (*) indicates a required parameter.
 
-Route | Request | Body | Params | Result
+Route | Request | Body | Query params | Result
 ----- | ------- | ---- | ------ | ------
 /stories | GET | | | returns all stories
 /stories | GET | | user_id | returns all stories by that user
-/stories | POST | *title, *description, *user_id | creates a new story
+/stories | POST | *title, *description, *user_id | | creates a new story
+/stories/:id | GET | | | returns the story with that ID
+/stories/:id | DELETE | | | deletes the story with that ID
+/stories/:id | PATCH | *one of the following: title, description, user_id | | updates a story
 
 ## Tech Stack
 
