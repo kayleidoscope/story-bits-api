@@ -25,7 +25,7 @@ An asterisk (*) indicates a required parameter.
 Route | Request | Body | Query params | Result
 ----- | ------- | ---- | ------ | ------
 /stories | GET | | | returns all stories
-/stories | GET | | user_id | returns all stories by that user
+/stories | GET | | *user_id | returns all stories by that user
 /stories | POST | *title, *description, *user_id | | creates a new story
 /stories/:id | GET | | | returns the story with that ID
 /stories/:id | DELETE | | | deletes the story with that ID
@@ -38,7 +38,7 @@ An asterisk (*) indicates a required parameter.
 Route | Request | Body | Query params | Result
 ----- | ------- | ---- | ------------ | ------
 /characters | GET | | | returns all characters
-/characters | GET | | story_id | returns all characters in that story
+/characters | GET | | *story_id | returns all characters in that story
 /characters | POST | *story_id, *name, *description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | creates a new character
 /characters/:id | GET | | | returns the character with that ID
 /characters/:id | DELETE | | | deletes the character with that ID
@@ -67,19 +67,40 @@ An asterisk (*) indicates a required parameter.
 Route | Request | Body | Query params | Result
 ----- | ------- | ---- | ------------ | ------
 /settings | GET | | | returns all settings
-/settings | GET | | story_id | returns settings for that story
+/settings | GET | | *story_id | returns settings for that story
 /settings | POST | *story_id, *name, *description, decor, is_residence | | creates a new setting
 /settings/:id | GET | | | returns the setting with that ID
 /settings/:id | DELETE | | | deletes the setting with that ID
 /settings/:id | PATCH | *at least one of the following: story_id, name, description, decor, is_residence | updates a setting
 
-Query param | type
+Query param | Type
 ----------- | ----
 story_id | number
 name | string
 description | string
 decor | string
 is_residence | boolean
+
+## /residences
+
+An asterisk (*) indicates a required parameter.
+
+A residence is defined as a character-setting relationship, indicating where a character lives.
+
+Route | Request | Body | Query params | Result
+----- | ------- | ---- | ------------ | ------
+/residences | GET | | | returns all residence entries
+/residences | GET | | *setting_id | returns all residence entries with that setting ID
+/residences | GET | | *character_id | returns all residence entries with that character_id
+/residences | POST | *character_id, *setting_id | | creates a new residence entry
+/residences/:id | GET | | | returns the residence with that ID
+/residences/:id | DELETE | | | deletes the residence with that ID
+/residences/:id | PATCH | *at least one of the following: character_id, setting_id | | updates a residence entry
+
+Query param | Type
+----------- | ----
+character_id | number
+setting_id | number
 
 ## Tech Stack
 
