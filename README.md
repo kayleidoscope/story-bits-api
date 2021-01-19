@@ -4,7 +4,7 @@ Used in conjunction with the Story Bits app, this API provides the functionality
 
 You can also view the (live site)[https://story-bits-app.vercel.app/] or visit the [frontend repo](https://github.com/kayleidoscope/story-bits-app).
 
-This API is CORS compatible.
+This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
 
 ## Endpoints
 
@@ -79,7 +79,7 @@ story_id | number
 name | string
 description | string
 decor | string
-is_residence | boolean
+is_residence | boolean (defaults to false)
 
 ## /residences
 
@@ -101,6 +101,19 @@ Query param | Type
 ----------- | ----
 character_id | number
 setting_id | number
+
+## Status codes
+
+Code | Endpoint | Request | Possible reason
+---- | --------------- | ------ | -------
+500 | any | any | Server error
+200 | any | GET | Data was successfully returned.
+201 | any | POST | Your POST was successful.
+204 | any with an id path param | PATCH | Your entry was successfully updated.
+204 | any with an id path param | DELETE | Your entry was successfully deleted.
+400 | any | POST | A required query param in the body is missing.
+404 | any with an id path param | GET, DELETE, or PATCH | An entry with that ID doesn't exist.
+400 | any with an id path param | PATCH | You must include at least one of the query params in the body.
 
 ## Tech Stack
 
