@@ -31,6 +31,19 @@ Route | Request | Body | Query params | Result
 /stories/:id | DELETE | | | deletes the story with that ID
 /stories/:id | PATCH | *one of the following: title, description, user_id | | updates a story
 
+## /characters
+
+An asterisk (*) indicates a required parameter.
+
+Route | Request | Body | Query params | Result
+----- | ------- | ---- | ------------ | ------
+/characters | GET | | | returns all characters
+/characters | GET | | story_id | returns all characters in that story
+/characters | POST | *story_id, *name, *description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | creates a new character
+/characters/:id | GET | | | returns the character with that ID
+/characters/:id | DELETE | | | deletes the character with that ID
+/characters/:id | PATCH | *one of the following: story_id, name, description, gender, appearance, fashion, age, room_decor, motivation, pronouns, history, pets, mannerisms | | updates a character
+
 ## Tech Stack
 
 * Javascript
