@@ -2,7 +2,7 @@
 
 Used in conjunction with the Story Bits app, this API provides the functionality for finding, creating, deleting, and editing stories, characters, and settings.
 
-You can also view the (live site)[https://story-bits-app.vercel.app/] or visit the [frontend repo](https://github.com/kayleidoscope/story-bits-app).
+You can also view the [live site](https://story-bits-app.vercel.app/) or visit the [frontend repo](https://github.com/kayleidoscope/story-bits-app).
 
 This API is not open for public use at this time, but is CORS compatible. The API will respond with a JSON object.
 
